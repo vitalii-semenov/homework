@@ -35,7 +35,7 @@ SuperMath.prototype['%'] = function(){
     return obj.X % obj.Y;
 }
 SuperMath.prototype.check = function(obj){
-    let q = confirm('Make an exprassion?');
+    let q = confirm(`Make an operation ${obj.znak} with ${obj.X} and ${obj.Y}`);
     if (q){
         return this[obj.znak]();
     } else if (!q){
