@@ -1,0 +1,26 @@
+ul{
+    list-style: none;
+    display: block;
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    font-size: 20px;
+}
+.border-ul{
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+}
+.for-li{
+    width: 100px;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+    padding: 5px;
+}
+.for-li:hover{
+    background-color: lightblue;
+}
+.bgCol{
+    background-color: lightslategrey;
+}
