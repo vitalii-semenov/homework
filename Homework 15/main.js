@@ -13,7 +13,7 @@ function rightClick(ev){
     }
     for (let i = 0; i < list.length; i++){
         let li = document.createElement('li');
-        li.classList.add('for-li', 'for-li:hover')
+        li.classList.add('for-li', 'for-li:hover');
         li.innerHTML = list[i];
         li.addEventListener('mousedown', toChanheBgCollor);
         ul.appendChild(li);

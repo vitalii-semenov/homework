@@ -1,6 +1,6 @@
 .range-block{
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     overflow: hidden;
@@ -9,7 +9,6 @@
     height: 270px;
     border: 1px solid black;
     border-radius: 5px;
-    background-color: rgba(0, 170, 14, 0.623);
 }
 .range-inner-red{
     display: inline-block;
@@ -18,11 +17,11 @@
     background-color: rgba(255, 0, 0, 0.856);
     transition: .3s;
 }
-.range-inner-white{
+.range-inner-green{
     display: inline-block;
     width: 75px;
     height: 150px;
-    background-color: #fff;
+    background-color: green;
     transition: .1s;
 }
 .innerText{
