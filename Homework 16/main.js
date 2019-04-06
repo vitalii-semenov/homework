@@ -29,7 +29,9 @@ window.onload = function(){
     let arr = ["1234hello", "hellohd;lfmg", "45yu89egrhellowegojih", "dfhghello", ",bnsdklb"];
     
     let resIndex = arr.reduce((prev, elem, pos, arr) => {
-        prev[pos] = elem.indexOf(match);
+        if (elem.indexOf(match) !== -1){
+            prev[pos] = elem.indexOf(match);
+        }
         return prev;
     }, []);
     console.log('Result of searching: ', resIndex);
