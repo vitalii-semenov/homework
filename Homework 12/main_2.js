@@ -13,7 +13,7 @@ function getRandColor(elemNumber){
         blocks[elemNumber].style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
 }
 setInterval(() => {
-    let randTop = Math.floor(Math.random()*(window.innerHeight - 100)),
+    let randTop = Math.floor(Math.random()*(document.documentElement.clientHeight - 100)),
         randleft = Math.floor(Math.random()*(document.documentElement.clientWidth - 100)),
         randElm = Math.floor(Math.random()*3);
 
