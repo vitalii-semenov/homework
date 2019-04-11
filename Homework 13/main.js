@@ -13,50 +13,34 @@ function moveInputRange(){
 }
 
 function moveRange(){
-    let percents = +inputRange.value,
-        overPrice = 0;
+    let percents = +inputRange.value;
+
     rangeInnerGreen.style.height = percents + '%';
-    overPrice = ((percents < 20)? 0.02 * percents :
-        (percents > 20 && percents < 50)? 0.04 * percents :
-        (percents > 50 && percents < 75)? 0.06 * percents : 0.08 * percents);
+
+    overPrice = overPrise(percents);
     rangeInnerRed.style.height = overPrice + '%';
     innerText.innerText = (percents + overPrice).toFixed(2);
+}
+function overPrise(num){
+    if(num < 20){
+        num *= 0.02;
+    } else if (num >20 && num < 50){
+        num *= 0.04;
+    } else if (num > 50 && num < 75){
+        num *= 0.06;
+    } else {
+        num *= 0.08;
+    }
+    return num;
 }
 
 // From Range input to Text input and Graphic scale
 
-inputRange.addEventListener('mouseup', moveRange);
-inputRange.addEventListener('mouseup', displayInput);
-
-inputRange.addEventListener('mousedown', function(ev){
-    inputRange.addEventListener('mousemove', displayInput);
-    inputRange.addEventListener('mousemove', moveRange);
-    inputRange.addEventListener('mouseup', function(ev){
-        inputRange.removeEventListener('mousemove', displayInput);        
-    });
-});
+inputRange.addEventListener('input', moveRange);
+inputRange.addEventListener('input', displayInput);
 
 
 // From Text input to Range input and Graphic scale
 
-inputRangeDisplay.addEventListener('keyup', moveInputRange);
-inputRangeDisplay.addEventListener('keyup', moveRange);
-
-// From Graphic scale to Text and Range input
-
-//Trying from graph to other
-// function moveScale(ev){
-//     rangeInnerGreen.style.height = ev.offsetY + 'px';
-//     inputRangeDisplay.value =  Math.round(100 - ev.offsetY/2.5);
-//     inputRange.value =  inputRangeDisplay.value;
-// }
-
-// rangeBlock.addEventListener('mousedown', moveScale);
-
-
-// rangeBlock.addEventListener('mousedown', function(ev){
-//     rangeBlock.addEventListener('mousemove', moveScale);
-//     document.addEventListener('mouseup', function(ev){
-//         rangeBlock.removeEventListener('mousemove', moveScale);
-//     })
-// });
+inputRangeDisplay.addEventListener('input', moveInputRange);
+inputRangeDisplay.addEventListener('input', moveRange);
