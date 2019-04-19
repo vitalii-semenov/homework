@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    let gitRepo = document.querySelector('.git-repo');
-
+    //  Make function Request
+    //-------------------------------------------------------
     function getFromGit(url) {
         return new Promise((resolve, reject) => {
 
@@ -20,6 +20,28 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
     
+    //  Make with Async/Awayt
+    //-------------------------------------------------------
+    // async function git() {
+    //     let hillelRepos = {};
+    //     let a = await fetch('https://api.github.com/orgs/hillel-front-end/repos');
+    //     let b = await a.json();
+    //     for (let elem of b){
+    //             let b1 = await fetch(`https://api.github.com/repos/hillel-front-end/${elem.name}/languages`);
+    //             let b2 = await b1.json();
+    //             hillelRepos[elem.name] = {
+    //                 default_branch: elem.default_branch,
+    //                 last_upd: elem.updated_at,
+    //                 languages: Object.keys(b2).join(', ')
+    //             }
+    //     }
+    //     return renderRes(hillelRepos)
+    // }
+    // git();
+    //-------------------------------------------------------
+
+    //  Make with Promises
+    //-------------------------------------------------------
     getFromGit('https://api.github.com/orgs/hillel-front-end/repos')
         .then(response => {
             let hillelRepos = {};
@@ -42,7 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => {
             console.error(err);
         })
+    //-------------------------------------------------------
 
+    
+    //  Rendering a table
+    //-------------------------------------------------------
     function renderRes(obj) {
         let table = document.createElement('table'),
             tr = document.createElement('tr'),
