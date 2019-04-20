@@ -21,49 +21,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     //  Make with Async/Awayt
-    //-------------------------------------------------------
-    // async function git() {
-    //     let hillelRepos = {};
-    //     let a = await fetch('https://api.github.com/orgs/hillel-front-end/repos');
-    //     let b = await a.json();
-    //     for (let elem of b){
-    //             let b1 = await fetch(`https://api.github.com/repos/hillel-front-end/${elem.name}/languages`);
-    //             let b2 = await b1.json();
-    //             hillelRepos[elem.name] = {
-    //                 default_branch: elem.default_branch,
-    //                 last_upd: elem.updated_at,
-    //                 languages: Object.keys(b2).join(', ')
-    //             }
-    //     }
-    //     return renderRes(hillelRepos)
-    // }
-    // git();
-    //-------------------------------------------------------
+    // -------------------------------------------------------
+    async function git() {
+        clearData();
+        let hillelRepos = {};
+        let a = await fetch('https://api.github.com/orgs/hillel-front-end/repos');
+        let b = await a.json();
+        for (let elem of b){
+                let b1 = await fetch(`https://api.github.com/repos/hillel-front-end/${elem.name}/languages`);
+                let b2 = await b1.json();
+                hillelRepos[elem.name] = {
+                    default_branch: elem.default_branch,
+                    last_upd: elem.updated_at,
+                    languages: Object.keys(b2).join(', ')
+                }
+        }
+        return renderRes(hillelRepos)
+    }
+    // -------------------------------------------------------
+
+    //  Clear data
+    // -------------------------------------------------------
+    function clearData() {
+        if (document.querySelector('table')){
+            document.querySelector('body').removeChild(document.querySelector('table'));
+        }
+    }
+    // -------------------------------------------------------
 
     //  Make with Promises
-    //-------------------------------------------------------
-    getFromGit('https://api.github.com/orgs/hillel-front-end/repos')
-        .then(response => {
-            let hillelRepos = {};
-            let res = response.reduce((prev, elem) => {
-                return getFromGit(`https://api.github.com/repos/hillel-front-end/${elem.name}/languages`)
-                    .then(resolve => {
-                        let langList =  Object.keys(resolve).join(', ');
-                        
-                        hillelRepos[elem.name] = {
-                            default_branch: elem.default_branch,
-                            last_upd: elem.updated_at,
-                            languages: langList
-                        }
-                    })
-            }, Promise.resolve());
-            res.then(() => {
-                renderRes(hillelRepos)
+    // -------------------------------------------------------
+    function res () {
+        clearData();
+        getFromGit('https://api.github.com/orgs/hillel-front-end/repos')
+            .then(response => {
+                let hillelRepos = {};
+                let res = response.reduce((prev, elem) => {
+                    return getFromGit(`https://api.github.com/repos/hillel-front-end/${elem.name}/languages`)
+                        .then(resolve => {
+                            let langList =  Object.keys(resolve).join(', ');
+                            
+                            hillelRepos[elem.name] = {
+                                default_branch: elem.default_branch,
+                                last_upd: elem.updated_at,
+                                languages: langList
+                            }
+                        })
+                    }, Promise.resolve());
+                res.then(() => {
+                    renderRes(hillelRepos)
+                })
             })
+            .catch(err => {
+                console.error(err);
         })
-        .catch(err => {
-            console.error(err);
-        })
+    }
     //-------------------------------------------------------
 
     
@@ -99,4 +111,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         document.querySelector('body').append(table);
     }
+    // -------------------------------------------------------
+
+    //  Buttons
+    // -------------------------------------------------------
+    let button = document.createElement('button');
+    button.innerHTML = 'Get Data';
+    button.addEventListener('click', res);
+    document.querySelector('body').append(button);
+
+    let buttonAsync = document.createElement('button');
+    buttonAsync.innerHTML = 'Get Data (Async/Await)';
+    buttonAsync.addEventListener('click', git);
+    document.querySelector('body').append(buttonAsync);
 })
