@@ -1,59 +1,58 @@
 window.onload = function(){
-    ;
-let guy = document.querySelector('.guy');
-guy.style.transition = '0.4s';
 
-function jumpUp(ev){
-    if (ev.keyCode === 32){
-        guy.style.top = guy.offsetTop - 100 + 'px';
-        setTimeout(jumpDown, 500);
+    let guy = document.querySelector('.guy');
+    guy.style.transition = '0.4s';
+    let guyObj = {
+        height: guy.offsetHeight,
+        width: guy.offsetWidth,
+        left: guy.offsetLeft
     }
-}
-function jumpDown(ev){
-    guy.style.top = guy.offsetTop + 100 + 'px';
-}
-function sitDown(ev){
-    if (ev.keyCode === 17){
-        guy.style.height = guy.offsetHeight - 40 + 'px';
-        guy.style.top = guy.offsetTop + 40 + 'px';
-        guy.style.width = guy.offsetWidth + 15 + 'px';
-        guy.style.left = guy.offsetLeft - 7.5 + 'px';
-        setTimeout(sitUp, 500);
+
+    function jumpUp(){
+            guy.style.top = guy.offsetTop - 100 + 'px';
+            setTimeout(jumpDown, 500);
     }
-}
-function sitUp(ev){
-    guy.style.height = guy.offsetHeight + 40 + 'px';
-    guy.style.top = guy.offsetTop - 40 + 'px';
-    guy.style.width = guy.offsetWidth - 15 + 'px';
-    guy.style.left = guy.offsetLeft + 6.5 + 'px';
-}
-function left(ev){
-    if (ev.keyCode === 37){
-        guy.style.left = guy.offsetLeft - 50 + 'px'
+    function jumpDown(){
+        guy.style.top = guy.offsetTop + 100 + 'px';
     }
-}
-function up(ev){
-    if (ev.keyCode === 38){
-        guy.style.top = guy.offsetTop - 50 + 'px'
+    function sitDown(){
+            
+            guy.style.height = guyObj.height - guyObj.height * 40 / 100 + 'px';
+            guy.style.width = guyObj.width + guyObj.width * 15 / 100 + 'px';
+            guy.style.left = guyObj.left - guyObj.width * 7.5 / 100 + 'px';
+            setTimeout(sitUp, 500);
     }
-}
-function right(ev){
-    if (ev.keyCode === 39){
-        guy.style.left = guy.offsetLeft + 50 + 'px'
+    function sitUp(){
+        guy.style.height = guyObj.height + 'px';
+        guy.style.width = guyObj.width + 'px';
+        guy.style.left = guyObj.left + 'px';
     }
-}
-function bottom(ev){
-    if (ev.keyCode === 40){
-        guy.style.top = guy.offsetTop + 50 + 'px'
+    function left(){
+            guy.style.left = guy.offsetLeft - 50 + 'px'
     }
-}
-document.addEventListener('keydown', function(ev){
-    jumpUp(ev);
-    sitDown(ev);
-    left(ev);
-    up(ev);
-    right(ev);
-    bottom(ev);
-})
+    function up(){
+            guy.style.top = guy.offsetTop - 50 + 'px'
+    }
+    function right(){
+            guy.style.left = guy.offsetLeft + 50 + 'px'
+    }
+    function bottom(){
+            guy.style.top = guy.offsetTop + 50 + 'px'
+    }
+    document.addEventListener('keydown', function(ev){
+        if (ev.keyCode === 32){
+            jumpUp(ev);
+        } else if (ev.keyCode === 17){
+            sitDown(ev);
+        } else if (ev.keyCode === 37){
+            left(ev);
+        } else if (ev.keyCode === 38){
+            up(ev);
+        } else if (ev.keyCode === 39){
+            right(ev);
+        } else if (ev.keyCode === 40){
+            bottom(ev);
+        }
+    })
 
 }
