@@ -1,101 +1,105 @@
 window.onload = function(){
 
-let guy = document.querySelector('.guy');
-guy.style.transition = '0.4s';
-
-function jumpUp(ev){
-    if (ev.keyCode === 32){
-        guy.style.top = guy.offsetTop - 100 + 'px';
-        setTimeout(jumpDown, 500);
+    let guy = document.querySelector('.guy');
+    guy.style.transition = '0.4s';
+    let guyObj = {
+        height: guy.offsetHeight,
+        width: guy.offsetWidth
     }
-}
-function jumpDown(ev){
-    guy.style.top = guy.offsetTop + 100 + 'px';
-}
-function sitDown(ev){
-    if (ev.keyCode === 17){
-        guy.style.height = guy.offsetHeight - 40 + 'px';
-        guy.style.top = guy.offsetTop + 40 + 'px';
-        guy.style.width = guy.offsetWidth + 15 + 'px';
-        guy.style.left = guy.offsetLeft - 7.5 + 'px';
+
+    function jumpUp(){
+            guy.style.top = guy.offsetTop - 100 + 'px';
+            setTimeout(jumpDown, 500);
+    }
+    function jumpDown(){
+        guy.style.top = guy.offsetTop + 100 + 'px';
+    }
+    function sitDown(){       
+        guyObj.top = guy.offsetTop;
+        guyObj.left = guy.offsetLeft;
+
+        guy.style.height = guyObj.height - guyObj.height * 40 / 100 + 'px';
+        guy.style.width = guyObj.width + guyObj.width * 15 / 100 + 'px';
+        guy.style.top = guyObj.top + guyObj.height * 40 / 100 + 'px';
+        guy.style.left = guyObj.left - guyObj.width * 7.5 / 100 + 'px';
         setTimeout(sitUp, 500);
     }
-}
-function sitUp(ev){
-    guy.style.height = guy.offsetHeight + 40 + 'px';
-    guy.style.top = guy.offsetTop - 40 + 'px';
-    guy.style.width = guy.offsetWidth - 15 + 'px';
-    guy.style.left = guy.offsetLeft + 6.5 + 'px';
-}
-function left(ev){
-    if (ev.keyCode === 37){
-        guy.style.left = guy.offsetLeft - 50 + 'px'
+    function sitUp(){
+        guy.style.height = guyObj.height + 'px';
+        guy.style.width = guyObj.width + 'px';
+        guy.style.top = guyObj.top + 'px';
+        guy.style.left = guyObj.left + 'px';
     }
-}
-function up(ev){
-    if (ev.keyCode === 38){
-        guy.style.top = guy.offsetTop - 50 + 'px'
+    function left(){
+            guy.style.left = guy.offsetLeft - 50 + 'px'
     }
-}
-function right(ev){
-    if (ev.keyCode === 39){
-        guy.style.left = guy.offsetLeft + 50 + 'px'
+    function up(){
+            guy.style.top = guy.offsetTop - 50 + 'px'
     }
-}
-function bottom(ev){
-    if (ev.keyCode === 40){
-        guy.style.top = guy.offsetTop + 50 + 'px'
+    function right(){
+            guy.style.left = guy.offsetLeft + 50 + 'px'
     }
-}
-document.addEventListener('keydown', function(ev){
-    jumpUp(ev);
-    sitDown(ev);
-    left(ev);
-    up(ev);
-    right(ev);
-    bottom(ev);
-})
+    function bottom(){
+            guy.style.top = guy.offsetTop + 50 + 'px'
+    }
+    document.addEventListener('keydown', function(ev){
+        if (ev.keyCode === 32){
+            jumpUp(ev);
+        } else if (ev.keyCode === 17){
+            sitDown(ev);
+        } else if (ev.keyCode === 37){
+            left(ev);
+        } else if (ev.keyCode === 38){
+            up(ev);
+        } else if (ev.keyCode === 39){
+            right(ev);
+        } else if (ev.keyCode === 40){
+            bottom(ev);
+        }
+    })
 
 
-//Contextmenu
+    //Contextmenu
 
-let list = ['Jump', 'Remove', 'Change collor'],
-    ul = document.querySelector('ul');
+    let list = ['Jump', 'Remove', 'Change collor'];
+    let ul = document.createElement('ul');
 
-function rightClick(ev){
-    ev.preventDefault();
-    ul.style.top = ev.clientY + 'px';
-    ul.style.left = ev.clientX + 'px';
-    ul.classList.add('border-ul');
-    ul.style.display = 'block';
-    if (ul.childNodes.length === list.length){
-        return;
+    function rightClick(ev){
+        ev.preventDefault();
+        ul.style.top = ev.clientY + 'px';
+        ul.style.left = ev.clientX + 'px';
+        ul.classList.add('border-ul');
+        ul.style.display = 'block';
+        document.querySelector('body').append(ul);
+
+        if (ul.innerHTML){
+            return;
+        }
+        for (let i = 0; i < list.length; i++){
+            let li = document.createElement('li');
+            li.classList.add('for-li', 'for-li:hover');
+            li.innerHTML = list[i];
+            ul.appendChild(li);
+        }
+        ul.children[0].addEventListener('mousedown', function(){
+            guy.style.top = guy.offsetTop - 100 + 'px';
+            setTimeout(jumpDown, 500);
+        });
+        ul.children[1].addEventListener('mousedown', toHide);
+        ul.children[2].addEventListener('mousedown', toChanheBgCollor);
+
+        document.addEventListener('mousedown', closeRightClick);
     }
-    for (let i = 0; i < list.length; i++){
-        let li = document.createElement('li');
-        li.classList.add('for-li', 'for-li:hover');
-        li.innerHTML = list[i];
-        ul.appendChild(li);
+    function toChanheBgCollor(){
+        guy.classList.toggle('bgCol');
     }
-    ul.children[0].addEventListener('mousedown', function(){
-        guy.style.top = guy.offsetTop - 100 + 'px';
-        setTimeout(jumpDown, 500);
-    });
-    ul.children[1].addEventListener('mousedown', toHide);
-    ul.children[2].addEventListener('mousedown', toChanheBgCollor);
+    function toHide(){
+        guy.style.display = 'none';
+    }
+    function closeRightClick(){
+        document.querySelector('ul').style.display = 'none';
 
-    document.addEventListener('mousedown', closeRightClick);
-}
-function toChanheBgCollor(ev){
-    guy.classList.toggle('bgCol');
-}
-function toHide(ev){
-    guy.style.display = 'none';
-}
-function closeRightClick(ev){
-    ul.style.display = 'none';
-
-}
-guy.addEventListener('contextmenu', rightClick);
+    }
+    guy.addEventListener('contextmenu', rightClick);
 
 }

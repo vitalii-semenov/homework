@@ -5,7 +5,6 @@ window.onload = function(){
     let guyObj = {
         height: guy.offsetHeight,
         width: guy.offsetWidth,
-        left: guy.offsetLeft
     }
 
     function jumpUp(){
@@ -16,16 +15,21 @@ window.onload = function(){
         guy.style.top = guy.offsetTop + 100 + 'px';
     }
     function sitDown(){
-            
+            guyObj.top = guy.offsetTop;
+            guyObj.left = guy.offsetLeft;
+
             guy.style.height = guyObj.height - guyObj.height * 40 / 100 + 'px';
             guy.style.width = guyObj.width + guyObj.width * 15 / 100 + 'px';
+            guy.style.top = guyObj.top + guyObj.height * 40 / 100 + 'px';
             guy.style.left = guyObj.left - guyObj.width * 7.5 / 100 + 'px';
             setTimeout(sitUp, 500);
     }
     function sitUp(){
         guy.style.height = guyObj.height + 'px';
         guy.style.width = guyObj.width + 'px';
+        guy.style.top = guyObj.top + 'px';
         guy.style.left = guyObj.left + 'px';
+
     }
     function left(){
             guy.style.left = guy.offsetLeft - 50 + 'px'
