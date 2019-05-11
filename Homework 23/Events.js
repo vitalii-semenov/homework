@@ -5,7 +5,7 @@ import * as sort from './Sort.js';
 let byName = document.querySelector('#byName');
 let byPrice = document.querySelector('#byPrice');
 
-const event = function() {
+const Event = function() {
     byName.addEventListener('click', () => {
         getGoods('goods.json')
             .then(resp => {
@@ -25,4 +25,4 @@ const event = function() {
             });
     });
 }
-export { event };
+export { Event };

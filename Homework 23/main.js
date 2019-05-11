@@ -1,4 +1,4 @@
 import { toRender } from './Render.js';
-import { event } from './event.js';
+import { Event } from './Events.js';
 
-event();
+Event();
